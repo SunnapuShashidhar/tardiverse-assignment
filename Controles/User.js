@@ -63,7 +63,7 @@ requiresSignIn=(req,res,next)=>{
 updateUser=async(req,res)=>{
   const {email,password}=req.body;
   const hash=await bcrypt.hash(password,10)
-  const user=UserSchema.findOneAndUpdate({email},{password:hash});
+  const user=UserSchema.updateOne({email},{password:hash});
   if(user){
     res.send({status:201,message:"updated successfully"})
   }else{
@@ -74,7 +74,7 @@ updateUser=async(req,res)=>{
 //--------------deleting a user
 deleteUser=(req,res)=>{
   const {email}=req.body;
-  const user=UserSchema.findOneAndRemove({email});
+  const user=UserSchema.deleteOne({email});
   if(user){
     res.send({status:201,message:"deleted successfully"})
   }else{
