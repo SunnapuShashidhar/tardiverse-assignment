@@ -53,9 +53,12 @@ getUser=(req,res)=>{
 }
 //---------------check its sign-in or not
 requiresSignIn=(req,res,next)=>{
-  const token=req.header("Authorization");
-  console.log(req.headers);
-  const user=jwt.verify(token,process.env.JWT_Sect);
+  const token=req.headers["authorization"].split(' ')[1];
+//   console.log(req.headers);
+  const user=jwt.verify(token,process.env.JWT_Sect,(err,responce)=>{
+  if(err){
+    return res.send({status:500,message:"Unauthorized token...!"})
+  });
   req.user=user;
   next();
 }
