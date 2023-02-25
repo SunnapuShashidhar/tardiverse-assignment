@@ -58,9 +58,10 @@ requiresSignIn=(req,res,next)=>{
   const user=jwt.verify(token,process.env.JWT_Sect,(err,responce)=>{
   if(err){
     return res.send({status:500,message:"Unauthorized token...!"})
-  });
+  }
   req.user=user;
   next();
+});
 }
 //----------------update
 updateUser=async(req,res)=>{
